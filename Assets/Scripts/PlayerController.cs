@@ -4,8 +4,17 @@ using System.Collections;
 public class PlayerController : MonoBehaviour 
 {
 	public float speed;
+	private int count;
+	public GUIText countText;
+	public GUIText winText;
 
-	// Update is called once per frame
+	void Start()
+	{
+		count = 0;
+		SetCountText ();
+		winText.text = "";
+	}
+
 	void FixedUpdate () 
 	{
 		float moveHorizontal = Input.GetAxis ("Horizontal");
@@ -21,6 +30,17 @@ public class PlayerController : MonoBehaviour
 		if (other.gameObject.tag == "PickUp") 
 		{
 			other.gameObject.SetActive(false);
+			count ++;
+			SetCountText ();
+		}
+	}
+
+	void SetCountText()
+	{
+		countText.text = string.Format ("Count: {0}", count);
+		if(count >= 8)
+		{
+			winText.text = "You win!";
 		}
 	}
 }
